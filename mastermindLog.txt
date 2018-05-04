@@ -1,0 +1,16 @@
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED
+2018-05-04 17:05:09 [main] domain.Game.<init>()
+INFO: BLACK, GREEN, YELLOW, RED

@@ -28,6 +28,12 @@ public class GameTest {
     }
 
     @Test
+    public void countCorrectPegs_RepeatedColor_OneCorrect() {
+        Row currentRow = new Row(new Peg[]{Peg.BLACK, Peg.BLUE, Peg.BLACK, Peg.BLACK});
+        assertEquals(1, classToTest.countCorrectPegs(currentRow, solution));
+    }
+
+    @Test
     public void countCorrectPegs_Zero() {
         Row currentRow = new Row(new Peg[]{Peg.BLUE, Peg.WHITE, Peg.RED, Peg.GREEN});
         assertEquals(0, classToTest.countCorrectPegs(currentRow, solution));

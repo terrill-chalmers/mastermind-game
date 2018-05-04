@@ -1,8 +1,5 @@
 package domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import static domain.Peg.getRandomColor;
 
 public class Row {
@@ -22,4 +19,8 @@ public class Row {
     public Peg[] getPattern() { return pattern; }
 
     public void setPattern(Peg[] pattern) { this.pattern = pattern; }
+
+    public String toReadableString() {
+        return this.getPattern()[0] + ", " + this.getPattern()[1] + ", " + this.getPattern()[2] + ", " + this.getPattern()[3];
+    }
 }
