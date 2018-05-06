@@ -54,7 +54,7 @@ public class Game {
 
     protected Row enterGuess(int turn) {
         Peg[] pegs = new Peg[4];
-        System.out.println("\nBlack = k, Blue = u, White = w, Red = r, Green = g, Yellow = y");
+        displayLegend();
         for (int pegNumber = 1; pegNumber <= 4; pegNumber++) {
             pegNumber = enterPeg(turn, pegs, pegNumber);
         }
@@ -64,6 +64,10 @@ public class Game {
         guess.setPattern(pegs);
 
         return guess;
+    }
+
+    private void displayLegend() {
+        System.out.println("\nBlack = k, Blue = u, White = w, Red = r, Green = g, Yellow = y");
     }
 
     private int enterPeg(int turn, Peg[] pegs, int pegNumber) {

@@ -19,6 +19,6 @@ public class GameTest {
     public void enterColor() {
         Row guess = new Row(new Peg[]{Peg.BLACK, Peg.RED, Peg.BLUE, Peg.GREEN});
         when(classToTest.enterGuess(1)).thenReturn(guess);
-        Row classToTest.enterGuess(1);
+//        Row classToTest.enterGuess(1);
     }
 }
