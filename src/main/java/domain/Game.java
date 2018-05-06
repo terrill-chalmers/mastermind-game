@@ -1,66 +1,94 @@
 package domain;
 
-import org.pmw.tinylog.Logger;
+import exception.UnknownPegException;
+import utility.Rules;
 
-import java.io.Console;
+import java.util.Scanner;
+
+import static domain.Row.createRandomSolution;
 
 public class Game {
     private Row solution;
     private Row[] board;
-    Console console = System.console();
+    private int[][] feedback;
 
-    public Game(Row solution) {
-        this.solution = solution;
-        Logger.info(solution.toReadableString());
+    public Game() {
+        this.solution = createRandomSolution();
         board = new Row[12];
+        feedback = new int[12][2];
     }
 
-    public Row getSolution() { return solution; }
+    public void playGame() {
+        boolean winGame = false;
+        displayWelcome();
 
-    public Row[] getBoard() { return board; }
+        for (int turn = 1; turn <= 12; turn++) {
+            Row currentGuess = enterGuess(turn);
 
-    public void setBoard(Row[] board) { this.board = board; }
-
-    public boolean isWin(Row currentRow) {
-        return 4 == countCorrectPegs(currentRow, solution);
-    }
-
-    protected int countCorrectPegs(Row currentRow, Row solution) {
-        int total = 0;
-
-        for (int i = 0; i < solution.getPattern().length; i++) {
-            if (currentRow.getPattern()[i] == solution.getPattern()[i]) {
-                total += 1;
+            if (Rules.isWin(currentGuess, solution)) {
+                winGame = displayWin(turn);
+                break;
             }
+
+            loadTurn(turn, currentGuess);
+            displayBoard(turn);
         }
 
-        return total;
+        displayLoss(winGame);
     }
 
-    protected int countCorrectColors(Row currentRow, Row solution) {
-        int total = 0;
+    private void displayWelcome() {
+        System.out.println("Welcome to Mastermind.");
+    }
 
-        int[] currentRowColorCount = createColorCountArray(currentRow);
-        int[] solutionColorCount = createColorCountArray(solution);
+    private boolean displayWin(int turn) {
+        System.out.println("You win in " + turn + " turns. The solution is " + solution.toReadableString());
+        return true;
+    }
 
-        for (int i = 0; i < Peg.values().length; i++) {
-            total += Math.min(currentRowColorCount[i], solutionColorCount[i]);
+    private void displayLoss(boolean winGame) {
+        if (!winGame) {
+            System.out.println("You lose. The correct answer is " + solution.toReadableString());
         }
-
-        return total;
     }
 
-    private int[] createColorCountArray(Row row) {
-        int[] colorTotals = new int[Peg.values().length];
-
-        for (int i = 0; i < row.getPattern().length; i++) {
-            colorTotals[row.getPattern()[i].getIndex()] += 1;
+    protected Row enterGuess(int turn) {
+        Peg[] pegs = new Peg[4];
+        System.out.println("\nBlack = k, Blue = u, White = w, Red = r, Green = g, Yellow = y");
+        for (int pegNumber = 1; pegNumber <= 4; pegNumber++) {
+            pegNumber = enterPeg(turn, pegs, pegNumber);
         }
+        System.out.println("\n");
 
-        return colorTotals;
+        Row guess = new Row();
+        guess.setPattern(pegs);
+
+        return guess;
     }
 
-    protected Peg enterColor() {
-        return console.readLine();
+    private int enterPeg(int turn, Peg[] pegs, int pegNumber) {
+        try {
+            System.out.print("Turn #" + turn + ": Enter a color for peg " + pegNumber + ": ");
+            Scanner scanner = new Scanner(System.in);
+            pegs[pegNumber - 1] = Peg.convertEntryToPeg(scanner.nextLine());
+        } catch (UnknownPegException e) {
+            pegNumber--;
+        }
+        return pegNumber;
+    }
+
+    private void loadTurn(int turn, Row currentGuess) {
+        board[turn - 1] = currentGuess;
+        feedback[turn - 1][0] = Rules.countCorrectPegs(currentGuess, solution);
+        feedback[turn - 1][1] = Rules.countCorrectColors(currentGuess, solution);
+    }
+
+    private void displayBoard(int currentTurn) {
+        for (int turn = 0; turn < currentTurn; turn++) {
+            System.out.println("Turn #" + (turn + 1) + ": " +
+                    board[turn].toReadableString() + " | " +
+                    "Correct pegs: " + feedback[turn][0] + " | " +
+                    "Correct colors: " + feedback[turn][1]);
+        }
     }
 }
