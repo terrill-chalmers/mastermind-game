@@ -22,6 +22,6 @@ public class Row {
     public void setPattern(Peg[] pattern) { this.pattern = pattern; }
 
     public String toReadableString() {
-        return this.getPattern()[0] + ", " + this.getPattern()[1] + ", " + this.getPattern()[2] + ", " + this.getPattern()[3];
+        return this.getPattern()[0] + "  " + this.getPattern()[1] + "  " + this.getPattern()[2] + "  " + this.getPattern()[3];
     }
 }
