@@ -89,7 +89,9 @@ public class Game {
 
     private void displayBoard(int currentTurn) {
         for (int turn = 0; turn < currentTurn; turn++) {
-            System.out.println("Turn #" + (turn + 1) + ": " +
+            System.out.println("Turn #" +
+                    ((turn + 1) > 9 ? (turn + 1) : (" " + (turn + 1)))
+                    + ": " +
                     board[turn].toReadableString() + " | " +
                     "Correct pegs: " + feedback[turn][0] + " | " +
                     "Correct colors: " + feedback[turn][1]);
